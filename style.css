@@ -1,0 +1,235 @@
+/* 全局樣式 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-bottom: 3px solid #9fd321;
+  width:950px;
+  margin: 0 auto; /* 讓 header 水平居中 */
+  box-sizing: border-box; /* 確保 padding 不影響寬度 */
+  height: 100px;
+}
+
+.logo img {
+  height: 50px;
+}
+
+/* 搜尋框容器樣式 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 1px; /* 增加內部元素之間的距離 */
+  padding: 0 2px;
+  background-image: url('searchBg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 400px;
+  height: 30px; /* 增加搜尋框的高度 */
+  box-sizing: border-box;
+  border: none;
+}
+
+.search-bar input,
+.search-bar select {
+  height: 90%; /* 讓高度與父容器一致 */
+  padding: 2px; /* 增加內部間距 */
+  border: none; /* 隱藏邊框 */
+  outline: none; /* 移除點擊時的外框 */
+  background-color: #ffffff; /* 設置背景為白色 */
+  color: #333; /* 設置文字顏色 */
+  box-sizing: border-box; /* 確保內部間距計入高度 */
+}
+
+.search-bar button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: transparent; /* 背景透明，顯示背景圖片 */
+  border: none;
+  cursor: pointer;
+}
+
+.search-bar button img.search-icon {
+  width: 40px; /* 調整放大鏡圖片的寬度 */
+  height: 30px; /* 調整放大鏡圖片的高度 */
+}
+
+.search-bar input {
+  flex: 1; /* 讓輸入框自動擴展 */
+}
+
+.search-bar button {
+  color: white;
+  background-color: #88c100;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  justify-content: flex-start; /* 從左側開始排列子元素 */
+  align-items: flex-start; /* 子元素在垂直方向從頂部對齊 */
+  gap: 20px; /* 子元素之間的間距 */
+  padding: 20px;
+  width: 900px; 
+  margin: 0 auto; /* 讓 main-content 水平居中 */
+  box-sizing: border-box;
+}
+
+.banner {
+  width: 900px; 
+  margin: 0; /* 讓 banner 水平居中 */
+  
+}
+
+.banner img {
+  max-width: 95%; /* 確保圖片不超出容器寬度 */
+  height: auto; /* 保持圖片比例 */
+}
+
+.login-box {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  border: 3px solid #f6f7f7;
+}
+
+.login-box h1 {
+  font-size: 1.5em;
+  color: #8fc421;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.login-box input {
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-box button {
+  padding: 10px;
+  background-color: #8fc421;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em; /* 調整字體大小 */
+}
+
+.login-title {
+  text-align: center; /* 圖片置中 */
+  margin-bottom: 20px; /* 與表單的間距 */
+}
+
+.login-title-image {
+  max-width: 100%; /* 限制圖片寬度為框的 80% */
+  height: auto; /* 保持圖片比例 */
+  display: block; 
+}
+
+.links {
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.links a {
+  font-size: 0.9em;
+  color: #0044aa;
+  text-decoration: underline;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.links span {
+  font-size: 0.9em; /* 調整非連結文字的大小 */
+  color: #333; /* 可選：設置文字顏色 */
+}
+
+/* Social Login */
+.social-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-login h3 {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.social-login button {
+  display: flex; /* 彈性佈局 */
+  align-items: center; /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative; /* 為了讓圖片與文字分開控制 */
+}
+.social-login .social-icon {
+  height: 30px; /* 圖片高度 */
+  margin-right: 8px; /* 圖片與文字的間距 */
+  position: absolute; /* 固定圖片位置 */
+  left: 10px; /* 靠左對齊 */
+  vertical-align: middle; /* 垂直置中 */
+}
+
+.social-login .openpoint {
+  background-color: #e90112;
+  font-size: 1em; /* 調整字體大小 */
+}
+
+.social-login .facebook {
+  background-color: #1877f2;
+  font-size: 1em; /* 調整字體大小 */
+}
+
+.social-login .line {
+  background-color: #00c301;
+  font-size: 1em; /* 調整字體大小 */
+}
+
+
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 7px;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 0.9em;
+  border-top: 1px solid #ddd;
+  width:950px;
+  margin: 0 auto; /* 讓 header 水平居中 */
+  box-sizing: border-box; /* 確保 padding 不影響寬度 */
+}

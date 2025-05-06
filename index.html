@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客來-會員登入</title>
+  <meta name="keywords" content="博客來,會員登入">
+  <meta name="description" content="博客來-會員登入">
+  <!-- 引入自定義 CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script src="script.js"></script>
+  
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a title="回博客來首頁">
+        <img src="home.png" alt="博客來 Logo">
+      </a>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="請輸入關鍵字">
+      <select>
+        <option value="all">全館</option>
+        <option value="books">圖書</option>
+        <option value="media">影音</option>
+        <option value="department">百貨</option>
+        <option value="magazine">雜誌</option>
+        <option value="tickets">售票</option>
+      </select>
+      <button> <img src="search.png" alt="搜尋" class="search-icon">
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="banner">
+      <img src="ad.png" alt="加入LINE好友">
+    </div>
+    <div class="login-box">
+      <!-- <h1>會員登入</h1> -->
+      <div class="login-title">
+        <img src="word.png" alt="會員登入" class="login-title-image">
+      </div>
+      <form>
+        <input type="text" placeholder="帳號ID或email" required>
+        <input type="password" placeholder="密碼 Password" required>
+        <button type="submit">登入</button>
+      </form>
+      <div class="links">
+        <a href="#">忘記帳號密碼</a>
+        <span> | 還不是會員？</span>
+        <a href="#">加入會員</a>
+      </div>
+      <div class="social-login">
+        <h3>更多登入方式</h3>
+        <button class="openpoint">
+          <img src="op.jpeg" alt="OPENPOINT Logo" class="social-icon">
+          使用 OPENPOINT 登入
+        </button>
+        <button class="facebook">
+          <img src="fb.png" alt="FACEBOOK Logo" class="social-icon">
+          使用 Facebook 登入</button>
+        <button class="line">
+          <img src="line.png" alt="LINE Logo" class="social-icon">
+          使用 LINE 登入</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>博客來數位科技股份有限公司&nbsp;&nbsp;&nbsp;&nbsp;地址：115 台北市南港區八德路四段768巷1弄18號B1之1</p>
+    <p>Copyright © since 1995 books.com.tw All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

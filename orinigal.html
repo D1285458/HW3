@@ -1,0 +1,1080 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>博客來-會員登入</title>
+    <meta name="keywords" content="博客來,會員登入">
+    <meta name="description" content="博客來-會員登入">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <link rel="stylesheet" href="/css/css.css"> -->
+    <link rel="stylesheet" href="https://jci.book.com.tw/css/books/newmember/css.css">
+    <link rel="stylesheet" href="https://jci.book.com.tw/css/books/newmember/newmember.css?v=20241220">
+    
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/destination?id=AW-1040394492&amp;l=dataLayer&amp;cx=c&amp;gtm=45je54u1h1v9127102809za200zb72805904&amp;tag_exp=101509157~103101747~103101749~103116025~103200001~103233427~103251618~103251620"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://d.line-scdn.net/n/line_tag/public/release/v1/lt.js"></script><script src="https://connect.facebook.net/signals/config/1700571533513678?v=2.9.199&amp;r=stable&amp;domain=cart.books.com.tw&amp;hme=53363064397d256bdf8f213dd9a9e18c291fc2ed691e4233e4a9e488f248f817&amp;ex_m=73%2C128%2C113%2C117%2C64%2C5%2C106%2C72%2C18%2C100%2C92%2C53%2C57%2C182%2C203%2C210%2C206%2C207%2C209%2C31%2C107%2C55%2C80%2C208%2C177%2C180%2C204%2C205%2C190%2C139%2C43%2C195%2C192%2C193%2C36%2C152%2C17%2C52%2C199%2C198%2C141%2C20%2C42%2C1%2C45%2C68%2C69%2C70%2C74%2C96%2C19%2C16%2C99%2C95%2C94%2C114%2C54%2C116%2C41%2C115%2C32%2C97%2C28%2C178%2C181%2C149%2C13%2C14%2C15%2C7%2C8%2C27%2C24%2C25%2C60%2C65%2C67%2C78%2C56%2C105%2C108%2C29%2C79%2C11%2C9%2C83%2C50%2C23%2C110%2C109%2C111%2C102%2C12%2C22%2C3%2C40%2C77%2C21%2C161%2C89%2C135%2C49%2C48%2C101%2C76%2C0%2C98%2C59%2C87%2C35%2C30%2C85%2C86%2C91%2C39%2C6%2C93%2C84%2C46%2C34%2C37%2C90%2C4%2C88%2C248%2C175%2C126%2C164%2C157%2C2%2C38%2C66%2C44%2C112%2C47%2C82%2C71%2C118%2C63%2C62%2C33%2C103%2C61%2C58%2C51%2C81%2C75%2C26%2C104%2C10%2C119" async=""></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-TR763QQ559&amp;l=dataLayer&amp;cx=c&amp;gtm=45He54u1h1v72805904za200&amp;tag_exp=101509156~103101747~103101749~103116025~103200001~103233424~103251618~103251620"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-TBZGS7"></script><script type="text/javascript" src="https://jci.book.com.tw/jss/jquery/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://jci.book.com.tw/jss/books/jqueryplugin/purl.js"></script>
+    <script type="text/javascript" src="https://jci.book.com.tw/jss/books/jqueryplugin/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="/js/common.js?v=20230323"></script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TBZGS7');</script>
+    <script type="text/javascript" src="//jci.book.com.tw/jss/books/sitejs/base64_conv.js"></script>
+    <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+    <script type="text/javascript" src="https://jci.book.com.tw/jss/dist/xss.sanitize.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        
+        var c = false;
+        let startTime, endTime, trajectory = [];
+        let imageWidth, imageHeight;
+        let isDragging = false, dragTimes = 0;
+        let startX, startY;
+        let pieceWidth, pieceHeight;
+        let containerWidth, containerHeight;
+        let timeoutID, seconds;
+        let piecePosition;
+        const timerElement = $('#timer');
+        
+        $('input, textarea').placeholder();
+        $('#login_id').focus();
+        $('.banner_btn').mouseover(function(e){ //banner
+            var id = DOMPurifySanitize('banner_' + $(this).attr('id'));
+            $('.banner_btn').removeClass('here');
+            $(this).addClass('here');
+            $('.banli').hide();
+            $('#'+id).fadeIn();
+        }).eq($('#bannerStart').val()).mouseover();
+        $('#regen').click(function(e){   //更新驗證碼
+            e.preventDefault();
+            $.ajax({
+                url: "/member/regen_captcha",
+                success: function(data, textStatus){
+                    data = DOMPurifySanitize(data);
+                    var imgUrl = "/member/captcha_login?" + data;
+                    $('#captcha_img').empty().html('<img src="' + imgUrl + '" width="160" height="75" />');
+                    $('#captcha').val('');
+                },
+                error: function(jqXHR, textStatus) {
+                    if (jqXHR.status === 408) {
+                        alert('您的操作有誤，請再重新操作');
+                    } else {
+                        alert('系統忙碌中，請稍後再試');
+                    }
+                }
+            })
+        });
+        $('#captcha').keypress(function(e){  //captcha
+            $('#captcha_warn').html('').hide();
+            if (e.which == 13){
+                e.preventDefault();
+                $('#books_login').click();
+            }
+        });
+        $('#login_id').keypress(function(e){    //login id
+            $('#id_warn').html('').hide();
+            if (e.which == 13){
+                e.preventDefault();
+                $('#show-captcha').click();
+            }
+        });
+        $('#login_id_eye').click(function(e){    //login_id_eye
+            e.preventDefault();
+            if ($('#login_id').prop('type') === "password") {
+                $('#login_id').prop('type', 'text');
+                $(this).addClass('show');
+              } else {
+                $('#login_id').prop('type', 'password');
+                $(this).removeClass('show');
+              }
+        });
+        $('#login_pswd').keypress(function(e){  //login pswd
+            $('#pswd_warn').html('').hide();
+            var s = String.fromCharCode(e.which);
+            if ((s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey)||
+                    (s.toUpperCase() !== s && s.toLowerCase() === s && e.shiftKey)) { //caps is on
+                $("#caps_warn").show();
+            }else if ((s.toLowerCase() === s && s.toUpperCase() !== s && !e.shiftKey)||
+                    (s.toLowerCase() !== s && s.toUpperCase() === s && e.shiftKey)) { //caps is off
+                $("#caps_warn").hide();
+            }
+            if (e.which == 13){
+                e.preventDefault();
+                $('#show-captcha').click();
+            }
+        });
+        $('#login_pswd_eye').click(function(e){    //login_pswd_eye
+            e.preventDefault();
+            if ($('#login_pswd').prop('type') === "password") {
+                $('#login_pswd').prop('type', 'text');
+                $(this).addClass('show');
+              } else {
+                $('#login_pswd').prop('type', 'password');
+                $(this).removeClass('show');
+              }
+        });
+        $('#books_login').click(function(e){    //login
+            e.preventDefault();
+            $('#refresh-captcha, #books_login').attr('disabled', true);
+            
+            var loginId = $.trim($('#login_id').val());
+            if (loginId == ''){    //驗證 login id
+                $('#id_warn').html('請輸入帳號ID或email').show();
+                return;
+            }
+            
+            var reg = /^[A-Za-z0-9_\-\.\@\+\!\%]{4,50}$/;
+            if (loginId != '' && !loginId.match(reg)) {
+                $('#id_warn').html('請以半形輸入，並輸入正確的帳號ID或email。').show();
+                return;
+            }
+            
+            var loginPswd = $.trim($('#login_pswd').val());
+            if (loginPswd == ''){    //驗證 login pswd
+                $('#pswd_warn').html('請輸入密碼 Password').show();
+                return;
+            }
+            piecePosition = $('#puzzle-piece').position();
+            $('#pz-piece').val(JSON.stringify(piecePosition));
+         
+            let centerX = piecePosition.left + pieceWidth / 2;
+            let centerY = piecePosition.top + pieceHeight / 2;
+    
+            let relativeX = centerX / containerWidth * imageWidth;
+            let relativeY = centerY / containerHeight * imageHeight;
+    
+            let captchaData = {
+                endPosition: {
+                    x: Math.round(relativeX),
+                    y: Math.round(relativeY)
+                },
+                trajectory: trajectory,
+                duration: endTime - startTime
+            };
+            clearTimeout(timeoutID);
+            maskDivShow();
+            $.ajax({
+                url: "/member/login_do/",
+                data: {
+                    captcha: JSON.stringify(captchaData),
+                    login_id: loginId,
+                    login_pswd: loginPswd
+    
+                },
+                type: 'POST',
+                success: function(data, textStatus){
+                    var result = $.parseJSON(data);
+                    result = DOMPurifySanitize(result);
+                    
+                    if (result.success){    //登入成功
+                        dataLayer.push({"event":"login","method":"books_login"});                    if (result.code == 168){
+                            location.href = "https://cart.books.com.tw/member/login_2factors/B/?url=https%3A%2F%2Fmyaccount.books.com.tw%2F%2F%3Fid%3D1454ad170c34a584a5f850727e0b1284&content=";
+                        } else {
+                            if (result.code == 2){
+                                $('#url').val("https://cart.books.com.tw/member/email_no_auth/");
+                            }else if (result.code == 3 && '' != 'N' && '' != 'app'){
+                                $('#url').val("https://cart.books.com.tw/member_activate/bind_notice");
+                            }
+                            go();
+                        }
+                    }else{  //登入失敗
+                        maskDivHidden();
+                        $('#refresh-captcha, #books_login').attr('disabled', false);
+                        if (result.code == 1){  //驗證碼錯誤
+                            $('#refresh-captcha').click();
+                            $('#pop_captcha_err').html(result.msg).show();
+                        } else if (result.code == 2){   //帳號密碼錯誤
+                            $('#login_pswd').val('');
+                            hide_slider_captcha();
+                            openPopDiv('wdialog');
+                        } else if (result.code == 3){  //帳號密碼錯誤
+                            c = true;
+                            hide_slider_captcha();
+                            openPopDiv('wdialog');
+                        } else if (result.code == 4){ //異常會員需修改密碼
+                            $('#pswd_safety_text').html('<li>由於您已有一段時間未異動密碼，為維護個人帳戶的安全性，</li><li>需請您變更密碼，謝謝您的配合</li>');
+                            $('#keep_password').hide();
+                            $('#update_password2').hide();
+                            $('#update_password1').show();
+                            hide_slider_captcha();
+                            openPopDiv('pswd_safety');
+                        } else if (result.code == 5){ //密碼最後異動日超過6個月
+                            $('#pswd_safety_text').html('<li>您已超過六個月未異動密碼，建議您變更密碼，以維謢個人帳戶安全性!!</li>');
+                            $('#update_password1').hide();
+                            $('#update_password2').show();
+                            $('#keep_password').show();
+                            hide_slider_captcha();
+                            openPopDiv('pswd_safety');
+                        } else if(result.code == 6) {
+                            hide_slider_captcha();
+                            $('#id_warn').html('請使用 OPENPOINT 登入').show();
+                        } else if(result.code == 7) {
+                            hide_slider_captcha();
+                            $('#id_warn').html('請使用 APPLE ID 登入').show();
+                        } else if (result.code == 168){ //兩階段驗證登入
+                            hide_slider_captcha();
+                            var msg_guid = result.msg_guid? '('+result.msg_guid+')' : '';
+                            alert('系統忙碌中，請稍後再試' + msg_guid);
+                            location.reload();
+                        }
+                    }
+                },
+                error: function(jqXHR, textStatus) {
+                    $('#refresh-captcha, #books_login').attr('disabled', false);
+                    hide_slider_captcha();
+                    if (jqXHR.status === 408) {
+                        alert('您的操作有誤，請再重新操作');
+                    } else {
+                        var r = $.parseJSON(jqXHR.responseText);
+                        var msg_guid = r.msg_guid? '('+r.msg_guid+')' : '';
+                        alert('系統忙碌中，請稍後再試'+ msg_guid);
+                    }
+                    maskDivHidden();
+                }
+            });
+        });
+        var fbwin;
+        $('#facebook_login').click(function(e){  //facebook login
+            e.preventDefault();
+            maskDivShow();
+            if (!fbwin || fbwin.closed !== false) {
+                fbwin = window.open($('#fbUrl').val(), 'fb_login', 'left=500,top=200,width=500,height=300,toolbar=no,location=no,menubar=no,status=0');
+            }
+            fbwin.focus();
+            var pollTimer = window.setInterval(function() {
+                if (!fbwin || fbwin.closed !== false) { // !== is required for compatibility with Opera
+                    window.clearInterval(pollTimer);
+                    maskDivHidden();
+                }
+            }, 200);
+        });
+        $('#wdialog_close').click(function(e){   //login failed - close window
+            e.preventDefault();
+            if (c){
+                location.reload();
+            }else{
+                closePopDiv('wdialog');
+            }
+        });
+        $('#retype').click(function(e){  //login failed - retype
+            e.preventDefault();
+            if (c){
+                location.reload();
+            }else{
+                closePopDiv('wdialog');
+            }
+        });
+        $('#fbterm_close').click(function(e){   //fb使用說明 - 關閉視窗
+            e.preventDefault();
+            closePopDiv('fbterm');
+        });
+        $('#fbterm_agreen').click(function(e){   //fb使用說明 - 同意
+            e.preventDefault();
+            closePopDiv('fbterm');
+            // clean previous value
+            $('#link_id').val('');
+            $('#link_pswd').val('');
+            $('#link_warn').empty();
+            openPopDiv('link');
+        });
+        $('#fbterm_disagreen').click(function(e){   //fb使用說明 - 不同意
+            e.preventDefault();
+            closePopDiv('fbterm');
+        });
+        $('#link_close').click(function(e){   //fb連結 - 關閉視窗
+            e.preventDefault();
+            closePopDiv('link');
+        });
+        $('#lineterm_close').click(function(e){   //Line使用說明 - 關閉視窗
+            e.preventDefault();
+            closePopDiv('lineterm');
+        });
+        $('#lineterm_agreen').click(function(e){   //Line使用說明 - 同意
+            e.preventDefault();
+            closePopDiv('lineterm');
+            // clean previous value
+            $('#line_link_id').val('');
+            $('#line_link_pswd').val('');
+            $('#line_link_warn').empty();
+            openPopDiv('line_link');
+        });
+        $('#lineterm_disagreen').click(function(e){   //Line使用說明 - 不同意
+            e.preventDefault();
+            closePopDiv('lineterm');
+        });
+        $('#line_link_close').click(function(e){   //LINE綁定 - 關閉視窗
+            e.preventDefault();
+            closePopDiv('line_link');
+        });
+        $('#pop_show_captcha_close').click(function(e){
+            e.preventDefault();
+            clearTimeout(timeoutID);
+            closePopDiv('pop_show_captcha');
+        });
+        
+        $('#link_id').keypress(function(e){ //link fb id
+            $('#link_warn').html('').hide();
+        });
+        $('#link_pswd').keypress(function(e){  //link fb pswd
+            $('#link_warn').html('').hide();
+            var s = String.fromCharCode(e.which);
+            if ((s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey)||
+                    (s.toUpperCase() !== s && s.toLowerCase() === s && e.shiftKey)) { //caps is on
+                $("#link_warn").html('大寫鎖定 (Caps Lock) 已啟用').show();
+            }else if ((s.toLowerCase() === s && s.toUpperCase() !== s && !e.shiftKey)||
+                    (s.toLowerCase() !== s && s.toUpperCase() === s && e.shiftKey)) { //caps is off
+                $("#link_warn").html('').hide();
+            }
+        });
+        $('#link_agreen').click(function(e){   //fb連結-同意
+            e.preventDefault();
+            var linkId = $.trim($('#link_id').val());
+            var linkPswd = $.trim($('#link_pswd').val());
+            if (linkId == ''){    //驗證 link fb id
+                $('#link_warn').html('請輸入帳號ID或email').show();
+                return;
+            }
+            var reg = /^[A-Za-z0-9_\-\.\@\+\!\%]{4,50}$/;
+            if (linkId != '' && !linkId.match(reg)) {
+                $('#link_warn').html('請以半形輸入，並輸入正確的帳號ID或email。').show();
+                return;
+            }
+                        
+            if (linkPswd == ''){    //驗證 login pswd
+                $('#link_warn').html('請輸入密碼 Password').show();
+                return;
+            }
+            $('#link_agreen').prop('disabled', true);
+            $('#link_warn').html("連結中...請稍後...").show();
+            $.ajax({
+                url: "/member/link_fb_do",
+                data: {
+                    link_id: linkId,
+                    link_pswd: linkPswd
+                },
+                type: 'POST',
+                success: function(data, textStatus){
+                    var result = $.parseJSON(data);
+                    result = DOMPurifySanitize(result);
+                    if (result.success){    //連結登入成功
+                        dataLayer.push({"event":"login","method":"facebook_login"});                    if (result.code == 3){
+                            $('#url').val("https://cart.books.com.tw/member_activate/bind_notice");
+                        }
+                        go();
+                    }else{  //連結登入失敗
+                        $('#link_agreen').prop('disabled', false);
+                        $('#link_warn').html(result.msg).show();
+                    }
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('系統忙碌中，請稍後再試');
+                    $('#link_agreen').prop('disabled', false);
+                    $('#link_warn').html("").show();
+                }
+            });
+        });
+        $('#link_disagreen').click(function(e){   //fb連結-不同意
+            e.preventDefault();
+            closePopDiv('link');
+        });
+        $('#line_link_disagreen').click(function(e){   //LINE綁定-不同意
+            e.preventDefault();
+            closePopDiv('line_link');
+        });
+        $('#line_link_id').keypress(function(e){ //link line id
+            $('#line_link_warn').html('').hide();
+        });
+        $('#line_link_pswd').keypress(function(e){  //link line pswd
+            $('#line_link_warn').html('').hide();
+            var s = String.fromCharCode(e.which);
+            if ((s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey)||
+                    (s.toUpperCase() !== s && s.toLowerCase() === s && e.shiftKey)) { //caps is on
+                $("#line_link_warn").html('大寫鎖定 (Caps Lock) 已啟用').show();
+            }else if ((s.toLowerCase() === s && s.toUpperCase() !== s && !e.shiftKey)||
+                    (s.toLowerCase() !== s && s.toUpperCase() === s && e.shiftKey)) { //caps is off
+                $("#line_link_warn").html('').hide();
+            }
+        });
+        /** LINE綁定 - 同意 */
+        $('#line_link_agreen').click(function(e){
+            e.preventDefault();
+            var linkId = $.trim($('#line_link_id').val());
+            var linkPswd = $.trim($('#line_link_pswd').val());
+            if (linkId == ''){    //驗證 link fb id
+                $('#line_link_warn').html('請輸入帳號ID或email').show();
+                return;
+            }
+            
+            var reg = /^[A-Za-z0-9_\-\.\@\+\!\%]{4,50}$/;
+            if (linkId != '' && !linkId.match(reg)) {
+                $('#line_link_warn').html('請以半形輸入，並輸入正確的帳號ID或email。').show();
+                return;
+            }
+            
+            if (linkPswd == ''){    //驗證 login pswd
+                $('#line_link_warn').html('請輸入密碼 Password').show();
+                return;
+            }
+            $('#line_link_agreen').prop('disabled', true);
+            $('#line_link_warn').html("連結中...請稍後...").show();
+            $.ajax({
+                url: "/member/link_line_do",
+                data: {
+                    link_id: linkId,
+                    link_pswd: linkPswd
+                },
+                type: 'POST',
+                success: function(data, textStatus){
+                    var result = $.parseJSON(data);
+                    result = DOMPurifySanitize(result);
+                    if (result.success){    //連結登入成功
+                        dataLayer.push({"event":"login","method":"line_login"});                    if (result.code == 3){
+                            $('#url').val("https://cart.books.com.tw/member_activate/bind_notice");
+                        }
+                        go();
+                    }else{  //連結登入失敗
+                        $('#line_link_agreen').prop('disabled', false);
+                        $('#line_link_warn').html(result.msg).show();
+                    }
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('系統忙碌中，請稍後再試');
+                    $('#line_link_agreen').prop('disabled', false);
+                    $('#line_link_warn').html("").show();
+                }
+            });
+        });
+        
+        $('#pswd_close').click(function(e){   //密碼安全性提示訊息 - 關閉視窗
+            e.preventDefault();
+            closePopDiv('pswd_safety');
+        });
+        $('#keep_password').click(function(e){ //密碼安全性 - 沿用舊密碼
+            $('#keep_password').hide();
+            $('#update_password1').hide();
+            $('#update_password2').hide();
+            var loginId = $.trim($('#login_id').val());
+            var loginPswd = encodeBase64($.trim($('#login_pswd').val()));
+            $.ajax({
+                url: "/member/keep_password",
+                data: {
+                    login_id: loginId,
+                    login_pswd: loginPswd
+                },
+                type: 'POST',
+                success: function(data, textStatus){
+                    var result = $.parseJSON(data);
+                    if (result.success){    //更新會員檔成功
+                        closePopDiv('pswd_safety');
+                        $('#books_login').click();//完成登入的動作
+                    }else{
+                        alert(result.msg);
+                    }
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('系統忙碌中，請稍後再試');
+                    maskDivHidden();
+                }
+            });
+        });
+        $('#update_password1').click(function(e){ //密碼安全性 - 異常會員修改密碼
+            $('#keep_password').hide();
+            $('#update_password1').hide();
+            $('#update_password2').hide();
+            var loginId = $.trim($('#login_id').val());
+            var url = $('#url').val();
+            $().redirect('update_password', {'loginId': loginId,'unusual' : 'Y','back_url' :url}, 'POST');
+        });
+        $('#update_password2').click(function(e){ //密碼安全性 - 修改密碼
+            $('#keep_password').hide();
+            $('#update_password1').hide();
+            $('#update_password2').hide();
+            var loginId = $.trim($('#login_id').val());
+            var url = $('#url').val();
+            $().redirect('update_password', {'loginId': loginId,'unusual' : 'N','back_url' :url}, 'POST');
+        });
+    
+        var linewin;
+        $('#line_login').click(function(e){  //line login
+            e.preventDefault();
+            maskDivShow();
+            var _h = 500;
+            var _t = ($(window).height() - _h) / 2;
+            if (!linewin || linewin.closed !== false) {
+                linewin = window.open('/member/go_to_line_auth', 'line_login', 'left=500,top='+_t+',width=400,height='+_h+',toolbar=no,location=no,menubar=no,status=0');
+            }
+            linewin.focus();
+            var pollTimer = window.setInterval(function() {
+                if (!linewin || linewin.closed !== false) { // !== is required for compatibility with Opera
+                    window.clearInterval(pollTimer);
+                    maskDivHidden();
+                }
+            }, 200);
+        });
+    
+        var opwin;
+        $('#op_login').click(function(e){  //openpoint login
+            e.preventDefault();
+            maskDivShow();
+            var _h = 620;
+            var _t = ($(window).height() - _h) / 2;
+            if (!opwin || opwin.closed !== false) {
+                opwin = window.open('/itgt/go_to_op_auth', 'op_login', 'left=500,top='+_t+',width=480,height='+_h+',toolbar=no,location=no,menubar=no,status=0');
+            }
+            opwin.focus();
+            var pollTimer = window.setInterval(function() {
+                if (!opwin || opwin.closed !== false) { // !== is required for compatibility with Opera
+                    window.clearInterval(pollTimer);
+                    maskDivHidden();
+                }
+            }, 200);
+        });
+    
+        $('#show-captcha').click(function(e){
+            e.preventDefault();
+            
+            var loginId = $.trim($('#login_id').val());
+            if (loginId == ''){    //驗證 login id
+                $('#id_warn').html('請輸入帳號ID或email').show();
+                return;
+            }
+            
+            var reg = /^[A-Za-z0-9_\-\.\@\+\!\%]{4,50}$/;
+            if (loginId != '' && !loginId.match(reg)) {
+                $('#id_warn').html('請以半形輸入，並輸入正確的帳號ID或email。').show();
+                return;
+            }
+            
+            var loginPswd = $.trim($('#login_pswd').val());
+            if (loginPswd == ''){    //驗證 login pswd
+                $('#pswd_warn').html('請輸入密碼 Password').show();
+                return;
+            }
+            
+            loadCaptcha();
+            
+        });
+        
+        $('#refresh-captcha').on('click', loadCaptcha);
+        
+        function loadCaptcha() {
+            $('#refresh-captcha, #books_login').attr('disabled', false);
+            $('#pop_captcha_err').html('').hide();
+            $.get('generate_seed', function(data) {
+    
+                if (!data.hasOwnProperty('v')){alert('系統錯誤'); return;}
+    
+                $('#slider-image').attr('src', 'slider_captcha_main?v=' + data.v);
+                $('#puzzle-piece').attr('src', 'slider_captcha_piece?v=' + data.v);
+                imageWidth = data.image_width;
+                imageHeight = data.image_height;
+    
+                $('#puzzle-piece').css({
+                    left: 0,
+                    top: Math.random() * (imageHeight - 62)
+                });
+    
+                pieceWidth = 62;
+                pieceHeight = 62;
+                dragTimes = 0;
+                seconds = 20;
+                clearTimeout(timeoutID);
+    
+                containerWidth = $('#slider-container').width();
+                containerHeight = $('#slider-container').height();
+    
+                $('#slider-container').show(); 
+                $('#refresh-captcha, #books_login').attr('disabled', false);
+            
+                openPopDiv('pop_show_captcha');
+    
+                updateTimer();
+            }, 'json');
+        }
+    
+        function updateTimer() {
+            timerElement.text(seconds);
+            if (seconds > 0) {
+                seconds--;
+                timeoutID = setTimeout(updateTimer, 1000);
+            } else {
+                $('#books_login').attr('disabled', true);
+                setTimeout(() => {
+                    alert('驗證碼過期，請重新驗證');
+                }, 100);
+            }
+        }
+        
+        function hide_slider_captcha(){
+            clearTimeout(timeoutID);
+            closePopDiv('pop_show_captcha');
+        }
+        
+        $('#puzzle-piece').on('mousedown touchstart', function(e) {
+            e.preventDefault();
+            isDragging = true;
+            if (dragTimes == 0){
+                startTime = new Date().getTime();
+                dragTimes++;
+            }
+    
+            if (e.type === 'mousedown') {
+                startX = e.pageX - $('#puzzle-piece').position().left;
+                startY = e.pageY - $('#puzzle-piece').position().top;
+                $('#puzzle-piece').css('cursor', 'grabbing');
+            } else {
+                let touch = e.originalEvent.touches[0];
+                startX = touch.pageX - $('#puzzle-piece').position().left;
+                startY = touch.pageY - $('#puzzle-piece').position().top;
+            }
+    
+            trajectory = [{x: $('#puzzle-piece').position().left, y: $('#puzzle-piece').position().top, t: 0}];
+        });
+    
+        $('.pop-slider-captcha').on('mousemove touchmove', function(e) {
+            if (isDragging) {
+                e.preventDefault();
+                let currentX, currentY;
+    
+                if (e.type === 'mousemove') {
+                    currentX = e.pageX - startX;
+                    currentY = e.pageY - startY;
+                } else {
+                    let touch = e.originalEvent.touches[0];
+                    currentX = touch.pageX - startX;
+                    currentY = touch.pageY - startY;
+                }
+    
+                currentX = Math.max(0, Math.min(currentX, containerWidth - pieceWidth));
+                currentY = Math.max(0, Math.min(currentY, containerHeight - pieceHeight));
+    
+                $('#puzzle-piece').css({left: currentX, top: currentY});
+    
+                trajectory.push({
+                    x: currentX,
+                    y: currentY,
+                    t: new Date().getTime() - startTime
+                });
+            }
+        });
+    
+        $('.pop-slider-captcha').on('mouseup touchend', function(e) {
+            $('#puzzle-piece').css('cursor', 'grab');
+            if (isDragging) {
+                isDragging = false;
+                endTime = new Date().getTime();
+                //submitForm();
+            }
+            //validatePuzzle(parseInt(puzzlePiece.css('left')), parseInt(puzzlePiece.css('top')), (endTime - startTime));
+        });
+        
+          
+        function validatePuzzle(left, top, t) {
+            console.log('Validating puzzle position:', left, top, t);
+        }
+    });
+    
+    function go(method = ''){
+        //ga4
+        if(method != ''){
+            dataLayer.push({"event":"login","method":method});        
+        }
+        // content analyze
+        var content = $('#content').val();
+        var ctParam = {};
+        if (content.length !== 0){
+            var ctAry = content.split(";");
+            for(var key in ctAry) {
+                var ctkey = ctAry[key].split('=');
+                ctParam[ctkey[0]] = ctkey[1];
+            }
+        }
+        // url analyze
+        var url = $('#url').val();
+        var urlObj = $.url(url);
+        var param = $.extend({}, urlObj.param(), ctParam);
+        var domain = urlObj.attr('protocol') + '://' + urlObj.attr('host');
+        var path = urlObj.attr('path');
+        var method = 'GET';
+        // post/get redirect
+        if (url.indexOf('/shopping/cart.php') >= 0
+                || url.indexOf('/shopping/promote_cart.php') >= 0
+                || url.indexOf('/shopping/supplier_cart.php') >= 0){   //force POST
+            method = 'POST';
+        }
+        $().redirect(domain + path, param, method);
+    }
+    function showFbTerm(){
+        if ($('#fbterm_text').html() == ""){
+            $.ajax({
+                url: "/member/fb_login_service_term",
+                success: function(data, textStatus){
+                    data = DOMPurifySanitize(data);
+                    $('#fbterm_text').html(data);
+                    openPopDiv('fbterm');
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('系統忙碌中，請稍後再試');
+                }
+            })
+        }else{
+            openPopDiv('fbterm');
+        }
+    }
+    
+    function showLineTerm(){
+        if ($('#lineterm_text').html() == ""){
+            $.ajax({
+                url: "/member/line_login_service_term",
+                success: function(data, textStatus){
+                    data = DOMPurifySanitize(data);
+                    $('#lineterm_text').html(data);
+                    openPopDiv('lineterm');
+                },
+                error: function(jqXHR, textStatus) {
+                    alert('系統忙碌中，請稍後再試');
+                }
+            })
+        }else{
+            openPopDiv('lineterm');
+        }
+    }
+    
+    /** 前往openpoint簡訊驗證 */
+    function goOPOtp() {
+        window.location = '/itgt/verify_otp';
+        window.setInterval(function() {
+            maskDivShow();
+        }, 300);
+    }
+    </script>
+    <script>
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+      googletag.cmd.push(function() {
+        googletag.defineSlot('/17812066/books_member_D_430x390_bot', [480, 320], 'div-gpt-ad-1515639533351-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.pubads().collapseEmptyDivs(true,true);
+        googletag.enableServices();
+      });
+    </script>
+    <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script src="https://securepubads.g.doubleclick.net/pagead/managed/js/gpt/m202504290101/pubads_impl.js" async=""></script><link href="https://securepubads.g.doubleclick.net/pagead/managed/dict/m202505010101/gpt" rel="compression-dictionary"><script type="text/javascript" async="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/1040394492/?random=1746426096119&amp;cv=11&amp;fst=1746426096119&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be54u1h1v899622978z872805904za201zb9127102809&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101509156~103101750~103101752~103116026~103200004~103233424~103251618~103251620&amp;ptag_exp=101509156~103101747~103101749~103116025~103200001~103233424~103251618~103251620&amp;u_w=1680&amp;u_h=1050&amp;url=https%3A%2F%2Fcart.books.com.tw%2Fmember%2Flogin%3Furl%3Dhttps%253A%252F%252Fmyaccount.books.com.tw%252F%252F%253Fid%253D1454ad170c34a584a5f850727e0b1284&amp;ref=https%3A%2F%2Fwww.google.com%2F&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%E5%8D%9A%E5%AE%A2%E4%BE%86-%E6%9C%83%E5%93%A1%E7%99%BB%E5%85%A5&amp;npa=0&amp;pscdl=noapi&amp;auid=754966719.1746426096&amp;uaa=x86&amp;uab=64&amp;uafvl=Google%2520Chrome%3B135.0.7049.115%7CNot-A.Brand%3B8.0.0.0%7CChromium%3B135.0.7049.115&amp;uamb=0&amp;uam=&amp;uap=macOS&amp;uapv=13.7.4&amp;uaw=0&amp;fledge=1&amp;_tu=Cg&amp;rfmt=3&amp;fmt=4"></script></head>
+    <body class="color_public">
+    <!--Header-->
+    <script type="text/javascript">
+    $(function(){
+        $(".search_set").hover(function(){
+            $(".search_popup").show();
+        },function(){
+            $(".search_popup").hide();
+        });
+        $(".search_popup a").click(function(){
+            $("#cat").val($(this).attr('cat'));
+            $("#search_name").text($(this).text());
+            $(".search_popup").hide();
+        });
+        $("#search" ).submit(function(e){
+            if ($('#key').val() === ''){
+                alert('請輸入關鍵字');
+                e.preventDefault();
+            }
+        });
+    });
+    </script>
+    
+    <!-- Country Select Start -->
+    <!-- Country Select End -->
+    
+    <div class="container_24 type04_header_simplify  clearfix" id="header_id" data-attr="simple">
+        <div class="grid_24 clearfix">
+            <div class="mod header_box clearfix" style="background-image:url(https://db.books.com.tw/G/header/2008/new_header/images/books_logo_a.gif)">
+                <div class="books_logo"><a href="https://www.books.com.tw" title="回博客來首頁"><span>回博客來首頁</span></a></div>
+                <div class="search clearfix">
+                    <h2 class="hide">網站搜尋</h2>
+    
+                    <form action="/member/search" id="search" name="search" method="GET" target="_blank">
+                        <input type="text" class="search_key" name="key" id="key" placeholder="請輸入關鍵字">
+                        <div class="search_set">
+                            <div class="top_search_tip">
+                                <a href="javascript:;"><span id="search_name">全館</span><span class="icon" title="展開" <="" span=""></span></a>
+                                <input type="hidden" name="cat" id="cat" value="all">
+                            </div>
+                            <ul class="search_popup" style="display:none;">
+                                <li><a href="javascript:;" cat="all" id="default_search_key">全館</a></li>
+                                <li><a href="javascript:;" cat="BKA">圖書</a></li>
+                                <li><a href="javascript:;" cat="AVA">影音</a></li>
+                                <li><a href="javascript:;" cat="DPA">百貨</a></li>
+                                <li><a href="javascript:;" cat="MGA">雜誌</a></li>
+                                <li><a href="javascript:;" cat="TKA">售票</a></li>
+                            </ul>
+                        </div>
+                        <button type="submit" title="搜尋"><span class="icon">搜尋</span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!--End Header-->
+    <!--start pop win-->
+    <div class="newmember_pop newmember message_info clearfix" id="wdialog" style="display: none;">
+        <div id="wdialog_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+        <div class="bd_a">
+            <h2 class="title_09" title="提示訊息">提示訊息</h2>
+            <!--提示訊息-->
+            <div class="set_cont">
+                <ul>
+                    <li>您輸入的帳號或密碼錯誤，請<a href="javascript:;" id="retype">重新輸入</a></li>
+                    <li>忘了會員帳號與密碼，請<a href="/member/forgot">查詢帳號與密碼</a></li>
+                    <li>還不是博客來會員，請<a href="/member/join_validate?url=https%3A%2F%2Fmyaccount.books.com.tw%2F%2F%3Fid%3D1454ad170c34a584a5f850727e0b1284" target="_blank">加入會員</a></li>
+                </ul>
+            </div><!--End 提示訊息-->
+        </div>
+    </div><!--end pop win-->
+    <!--start pop win-->
+    <div class="newmember_pop newmember fb_policy clearfix" id="fbterm" style="display: none;">
+        <div id="fbterm_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+        <div class="bd_a">
+            <h2 class="title_06" title="會員登入-博客來連結FB帳號，使用說明">博客來連結FB帳號，使用說明</h2>
+            <div class="member_m01 clearfix" id="fbterm_text"></div>
+            <div class="ft01 btnwrap">
+                <span><a href="javascript:;" id="fbterm_agreen" class="button02">同意</a></span>
+                <span><a href="javascript:;" id="fbterm_disagreen" class="button03">不同意</a></span>
+            </div>
+        </div>
+    </div><!--end pop win-->
+    <!--start pop win-->
+    <div class="newmember_pop newmember fb_link clearfix" id="link" style="display: none;">
+        <div id="link_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+        <div class="bd_a">
+            <h2 class="title_07" title="會員登入-連結您的博客來帳號">連結您的博客來帳號</h2>
+            <div class="member_m01 clearfix">
+                <p>請填入您的博客來會員帳號或e-mail，以及密碼。<br>
+                您只需設定一次，日後即可用 facebook 快速登入博客來。</p>
+            </div>
+            <div class="set_cont">
+                <h3 class="pic">fb連結您的博客來帳號</h3>
+                <p><input type="text" id="link_id" required="required" placeholder="博客來 帳號ID或email" class="width01 input01" autocorrect="off" autocapitalize="none"></p>
+                <p><input type="password" id="link_pswd" required="required" placeholder="博客來 密碼 Password" class="width01 input01" maxlength="16" size="16"></p>
+                <p class="point msg" id="link_warn" style="display:none;"></p>
+            </div>
+            <div class="mod ft01 btnwrap clearfix">
+                <span><a href="javascript:;" id="link_agreen" class="button02">同意</a></span>
+                <span><a href="javascript:;" id="link_disagreen" class="button03">不同意</a></span>
+            </div>
+            <ul class="mod member_m03 clearfix">
+                <li class="li_left"><a href="/member/forgot" target="_blank">忘記帳號密碼</a></li>
+                <li class="li_right">還不是會員? <a href="/member/join_validate?url=https%3A%2F%2Fmyaccount.books.com.tw%2F%2F%3Fid%3D1454ad170c34a584a5f850727e0b1284" target="_blank">加入會員</a></li>
+            </ul>
+        </div>
+    </div><!--end pop win-->
+    <!--start pop win-->
+    <div class="newmember_pop newmember message_info clearfix" id="pswd_safety" style="display: none;">
+          <div id="pswd_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+          <div class="bd_a">
+        <h2 class="title_09" title="提示訊息">提示訊息</h2>
+            <!--提示訊息-->
+            <div class="set_cont">
+              <ul id="pswd_safety_text">
+              </ul>
+            </div><!--End 提示訊息-->
+            <div class="mod ft01 btnwrap clearfix">
+          <span><a href="#" class="button02" id="update_password1">修改密碼</a></span>
+              <span><a href="#" class="button02" id="update_password2">修改密碼</a></span>
+              <span><a href="#" class="button03" id="keep_password">沿用舊密碼</a></span>
+        </div>
+        </div>
+      </div><!--end pop win-->
+    
+    <!--Line 隱私聲明 pop win-->
+    <div class="newmember_pop newmember line_policy clearfix" id="lineterm" style="display: none;">
+        <div id="lineterm_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+        <div class="bd_a">
+            <h2 class="page-title pattern">
+              <span><b>博客來連結LINE帳號，使用說明</b></span>
+            </h2>
+            <div class="member_m01 clearfix" id="lineterm_text"></div>
+            <div class="ft01 btnwrap">
+                <span><a href="javascript:;" id="lineterm_agreen" class="button02">同意</a></span>
+                <span><a href="javascript:;" id="lineterm_disagreen" class="button03">不同意</a></span>
+            </div>
+        </div>
+    </div><!--Line 隱私聲明 end pop win-->
+    
+    <!--Line綁定 pop win-->
+    <div class="newmember_pop newmember line_link clearfix" id="line_link" style="display: none;">
+        <div id="line_link_close" class="close_pop" title="關閉視窗"><span>關閉視窗</span></div>
+        <div class="bd_a">
+            <h2 class="page-title pattern">
+              <span><b>連結您的LINE帳號</b></span>
+            </h2>
+            <!--連結您的博客來帳號-->
+            <div class="member_m01 clearfix">
+              <p>請填入您的博客來會員帳號或e-mail，以及密碼。<br>您只需設定一次，日後即可用 LINE 快速登入博客來。</p>
+            </div>
+            <div class="set_cont">
+                <h3 class="pic">LINE連結您的博客來帳號</h3>
+                <p><input type="text" id="line_link_id" required="required" placeholder="博客來 帳號ID或email" class="width01 input01" autocorrect="off" autocapitalize="none"></p>
+                <p><input type="password" id="line_link_pswd" required="required" placeholder="博客來 密碼 Password" class="width01 input01" maxlength="16" size="16"></p>
+                <p class="point msg" id="line_link_warn" style="display:none;"></p>
+            </div>
+            <div class="mod ft01 btnwrap clearfix">
+                <span><a href="javascript:;" id="line_link_agreen" class="button02">同意</a></span>
+                <span><a href="javascript:;" id="line_link_disagreen" class="button03">不同意</a></span>
+            </div>
+            <ul class="mod member_m03 clearfix">
+                <li class="li_left"><a href="/member/forgot" target="_blank">忘記帳號密碼</a></li>
+                <li class="li_right">還不是會員? <a href="/member/join_validate?url=https%3A%2F%2Fmyaccount.books.com.tw%2F%2F%3Fid%3D1454ad170c34a584a5f850727e0b1284" target="_blank">加入會員</a></li>
+            </ul>
+        </div>
+    </div><!--Line綁定 end pop win-->
+    
+    <!--start pop win-->
+    <div class="pop-win newmember pop-slider-captcha clearfix" style="display:none;" id="pop_show_captcha">
+        <div class="pop-ctn">
+            <div class="wrap">
+                <h2 class="page-title pattern">
+                    <span><b>安全性驗證</b></span>
+                    <a href="javascript:;" class="btn-close" id="pop_show_captcha_close"><i class="icon-fail"></i></a>
+                </h2>
+                <!-- scroll -->
+                <div class="scroll-wrap">
+                    <p class="font-13">請移動方塊至正確位置後送出</p>
+                    <div class="slider-captcha-wrap" id="slider-container">
+                        <img id="puzzle-piece" class="puzzle-piece" src="" alt="Puzzle Piece" style="cursor: grab; left: 5px; top: 17.5753px;">
+                        <img id="slider-image" class="slider-image" src="" alt="Slider Puzzle">
+                        
+                    </div>
+                    <div class="mod ft01 btnwrap">
+                        <button class="button02" id="books_login">確認送出(<span id="timer"></span>)</button>
+                        <button class="button03" id="refresh-captcha">更換驗證圖</button>
+                    </div>
+                    <p class="feedback" id="pop_captcha_err" style="display:none;"></p>
+                </div><!-- scroll End -->
+            </div>
+        </div>
+    </div>
+    <!--end pop win-->
+      
+    <!--main_wrap-->
+    <div class="container_24 main_wrap clearfix">
+        <!--main_column( 20grid:790px )-->
+        <div class="grid_20 push_2 newmember">
+            <div class="mod join_wrap clearfix">
+                <div class="box_1 grid_13 alpha">
+                    <!--m04-->
+                    <div class="mod member_m04 flearfix">
+                        <h3 class="hide">廣告輪播</h3>
+                        <!--<input type="hidden" id="bannerStart" value="" />-->
+                        <!--Banner430x390-->
+    <!--                    <ul class="banner" style="display:none;">
+                            <li class="banli" id="banner_"><a  target="_blank"><img class="ban" src=""></a></li>
+                        </ul>
+                        <div class="cycle_btn" style="display:none;">
+                            <ul class="btn">
+                                <li class="banner_btn" id=""><a title="" href="javascript:;"><span></span></a></li>
+                            </ul>
+                        </div>-->
+                        <!-- /17812066/books_member_D_430x390_bot -->
+                        <div id="div-gpt-ad-1515639533351-0" style="height: 320px; width: 480px;" data-google-query-id="CPaX0ZjYi40DFSlZDwIdNd8mWA">
+                        
+                        <div id="google_ads_iframe_/17812066/books_member_D_430x390_bot_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/17812066/books_member_D_430x390_bot_0" name="google_ads_iframe_/17812066/books_member_D_430x390_bot_0" title="3rd party ad content" width="480" height="320" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" aria-label="Advertisement" tabindex="0" allow="private-state-token-redemption;attribution-reporting" data-load-complete="true" data-google-container-id="1" style="border: 0px; vertical-align: bottom;"></iframe></div></div>
+                    </div><!--End m04-->
+                </div>
+                <div class="box_2 grid_7 omega">
+                    <div class="content_wrap">
+                        <div class="bd_b">
+                            <h1 class="title_05" title="會員登入">會員登入</h1>
+                            <div class="mod clearfix">
+                                <table class="table_c">
+                                    <colgroup><col width="50%">
+                                    <col width="50%">
+                                    </colgroup><tbody>
+                                        <tr><td colspan="2">
+                                            <p class="idword">
+                                                <input type="password" name="login_id" id="login_id" value="" class="width01 input01" required="required" placeholder="帳號ID或email" maxlength="50" size="50" tabindex="1" autocorrect="off" autocapitalize="none">
+                                                <i class="icon" id="login_id_eye"></i>
+                                            </p>
+                                            <p class="point msg" id="id_warn" style="display:none;"></p>
+                                            </td></tr>
+                                        <tr><td colspan="2">
+                                                <p class="idword">
+                                                    <input type="password" name="login_pswd" id="login_pswd" class="width01 input01" required="required" placeholder="密碼 Password" maxlength="16" size="16" tabindex="2">
+                                                    <i class="icon" id="login_pswd_eye"></i>
+                                                </p>
+                                                <p class="point msg" id="pswd_warn" style="display:none;"></p>
+                                                <p class="point msg" id="caps_warn" style="display:none;">大寫鎖定 (Caps Lock) 已啟用</p>
+                                                <input type="hidden" name="url" id="url" value="https://myaccount.books.com.tw//?id=1454ad170c34a584a5f850727e0b1284">
+                                                <input type="hidden" name="content" id="content" value="">
+                                            </td></tr>
+    <!--                                    <tr><td colspan="2">
+                                                <input type="text" name="captcha" id="captcha" class="width01 input01" required="required" placeholder="請輸入驗證碼（不分大小寫）" maxlength="4" size="6" autocomplete="off" tabindex="3">
+                                                <p class="point msg" id="captcha_warn" style="display:none;"></p>
+                                        </td></tr>
+                                        <tr>
+                                            <td>
+                                                <div id="captcha_img"><img src="" width="160" height="75"></div>
+                                            </td>
+                                            <td style="text-align:center;"><p><a href="javascript:;" id="regen">更新驗證碼</a></p></td>
+                                        </tr>-->
+                                        <tr><td colspan="2"><button id="show-captcha" class="button04" tabindex="4">登入</button></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mod clearfix">
+                                <ul class="member_m03">
+                                    <li class="li_left"><a href="/member/forgot">忘記帳號密碼</a></li>
+                                    <li class="li_right">還不是會員? <a href="/member/join_validate?url=https%3A%2F%2Fmyaccount.books.com.tw%2F%2F%3Fid%3D1454ad170c34a584a5f850727e0b1284" target="_blank">加入會員</a></li>
+                                </ul>
+                            </div>
+                            <div class="mod sns-btn-group h">
+                                <h3>更多登入方式</h3>
+                                <ul>
+                                    <li>
+                                                                        <a href="javascript:;" id="op_login" class="sns-btn btn-op">&nbsp;&nbsp;&nbsp;&nbsp;使用&nbsp;OPENPOINT&nbsp;登入</a>
+                                                                    </li>
+                                    <li>
+                                        <a href="javascript:;" id="facebook_login" class="sns-btn btn-fb" title="Facebook登入">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用&nbsp;Facebook&nbsp;登入</a>
+                                        <input type="hidden" id="fbUrl" value="https://www.facebook.com/v18.0/dialog/oauth?client_id=210743125726405&amp;scope=email,public_profile&amp;redirect_uri=https%3A%2F%2Fcart.books.com.tw%2Fmember%2Ffb_login_do&amp;display=popup">
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" id="line_login" class="sns-btn btn-line" title="Line登入">&nbsp;&nbsp;&nbsp;&nbsp;使用&nbsp;LINE&nbsp;登入</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    <!--                <div>
+                        <div id="twcaseal" class="small3" style="height:100px; margin:10px auto 0; width: 113px;"><img src='/image/twcaseal_small3.jpg'/></div>
+                        <script type="text/javascript" src="//ssllogo.twca.com.tw/twcaseal2_v3.js" charset="utf-8"></script>
+                    </div>-->
+                </div>
+            </div>
+        </div><!--end main_column-->
+        <!--right_column( 2grid:70px )-->
+        <div class="grid_2 push_2">&nbsp;</div><!--end right_column-->
+        <!--left_column( 2grid:70px )-->
+        <div class="grid_2 pull_22">&nbsp;</div><!--end left_column-->
+    
+    </div><!--End main_wrap-->
+    <!--footer-->
+    <div class="container_24 type04_footer_simplify clearfix">
+        <div class="grid_24 wrap clearfix">
+            <div class="bd">
+                <h4 class="books_logo"><a></a></h4>
+                <ul class="service_message">
+                    <li><p><span>博客來數位科技股份有限公司</span><span>地址：115 台北市南港區八德路四段768巷1弄18號B1之1</span></p></li>
+                    <li><p>Copyright © since 1995 books.com.tw All Rights Reserved.</p></li>
+                </ul>
+            </div>
+        </div>
+    </div><!--End footer-->
+    
+    
+    <script type="text/javascript" id="" charset="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1700571533513678");fbq("track","PageView");</script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1700571533513678&amp;ev=PageView&amp;noscript=1"></noscript>
+    
+    
+    
+    <script type="text/javascript" id="" charset="">(function(a,b,d){a._ltq=a._ltq||[];a._lt=a._lt||function(){a._ltq.push(arguments)};var e="https:"===location.protocol?"https://d.line-scdn.net":"http://d.line-cdn.net",c=b.createElement("script");c.async=1;c.src=d||e+"/n/line_tag/public/release/v1/lt.js";b=b.getElementsByTagName("script")[0];b.parentNode.insertBefore(c,b)})(window,document);_lt("init",{customerType:"lap",tagId:"6dfb1cd8-9f16-460d-944e-f660fa0a957e"});_lt("send","pv",["6dfb1cd8-9f16-460d-944e-f660fa0a957e"]);</script>
+    <noscript>
+      <img height="1" width="1" style="display:none" src="https://tr.line.me/tag.gif?c_t=lap&amp;t_id=6dfb1cd8-9f16-460d-944e-f660fa0a957e&amp;e=pv&amp;noscript=1">
+    </noscript>
+    
+    <script type="text/javascript" id="" charset="">var n=0;document.addEventListener("keydown",function(b){n++;n%5==1&&$.get("https://cart.books.com.tw/muses",{n:n.toString(36)},function(a){console.log(a)})});</script><script type="text/javascript" id="" charset="">var r=document.referrer,i=new Image;r=""===r?"DIRECT":encodeURIComponent(r);i.referrerPolicy="unsafe-url";i.src="https://mercury.books.com.tw/logs/col/_bt.gif?ref\x3d"+r;document.body.appendChild(i);</script><img referrerpolicy="unsafe-url" src="https://mercury.books.com.tw/logs/col/_bt.gif?ref=https%3A%2F%2Fwww.google.com%2F"><iframe height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    <iframe allow="join-ad-interest-group" data-tagging-id="AW-1040394492" data-load-time="1746426096125" height="0" width="0" src="https://td.doubleclick.net/td/rul/1040394492?random=1746426096119&amp;cv=11&amp;fst=1746426096119&amp;fmt=3&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be54u1h1v899622978z872805904za201zb9127102809&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101509156~103101750~103101752~103116026~103200004~103233424~103251618~103251620&amp;ptag_exp=101509156~103101747~103101749~103116025~103200001~103233424~103251618~103251620&amp;u_w=1680&amp;u_h=1050&amp;url=https%3A%2F%2Fcart.books.com.tw%2Fmember%2Flogin%3Furl%3Dhttps%253A%252F%252Fmyaccount.books.com.tw%252F%252F%253Fid%253D1454ad170c34a584a5f850727e0b1284&amp;ref=https%3A%2F%2Fwww.google.com%2F&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%E5%8D%9A%E5%AE%A2%E4%BE%86-%E6%9C%83%E5%93%A1%E7%99%BB%E5%85%A5&amp;npa=0&amp;pscdl=noapi&amp;auid=754966719.1746426096&amp;uaa=x86&amp;uab=64&amp;uafvl=Google%2520Chrome%3B135.0.7049.115%7CNot-A.Brand%3B8.0.0.0%7CChromium%3B135.0.7049.115&amp;uamb=0&amp;uam=&amp;uap=macOS&amp;uapv=13.7.4&amp;uaw=0&amp;fledge=1&amp;_tu=Cg" style="display: none; visibility: hidden;"></iframe><iframe name="google_ads_top_frame" id="google_ads_top_frame" style="display: none; position: fixed; left: -999px; top: -999px; width: 0px; height: 0px;"></iframe><script type="text/javascript" id="" charset="">!function(){var a;(a=Math.floor(10*Math.random()),console.log(a),9>a)||(a=(a=window.performance||window.webkitPerformance)&&a.timing)&&0!==a.navigationStart&&0!==a.loadEventStart&&(a={page_load:a.loadEventStart-a.navigationStart,page_download:a.responseEnd-a.responseStart,dns:a.domainLookupEnd-a.domainLookupStart,redirect_response:a.fetchStart-a.navigationStart,server_response:a.responseStart-a.requestStart,tcp_connect:a.connectEnd-a.connectStart,dom_interactive:a.domInteractive-a.navigationStart,
+    content_load:a.domContentLoadedEventStart-a.navigationStart},0<Object.values(a).filter(function(b){if(0>b)return b}).length||(15E3<a.page_load&&(a.page_load=15E3),console.log(a.page_load),dataLayer.push({event:"performance_timing",timing:a})))}();</script></body><iframe name="goog_topics_frame" src="https://securepubads.g.doubleclick.net/static/topics/topics_frame.html" style="display: none;"></iframe></html>
