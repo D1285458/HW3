@@ -45,8 +45,18 @@
         <img src="word.png" alt="會員登入" class="login-title-image">
       </div>
       <form>
-        <input type="text" placeholder="帳號ID或email" required>
-        <input type="password" placeholder="密碼 Password" required>
+        <div class="input-container">
+          <input type="text" id="account-input" placeholder="帳號ID或email" required>
+          <button type="button" id="toggle-account-visibility" class="toggle-visibility">
+            <img src="close.png" alt="切換顯示" id="account-visibility-icon">
+          </button>
+        </div>
+        <div class="input-container">
+          <input type="password" id="password-input" placeholder="密碼 Password" required>
+          <button type="button" id="toggle-password-visibility" class="toggle-visibility">
+            <img src="close.png" alt="切換顯示" id="password-visibility-icon">
+          </button>
+        </div>
         <button type="submit">登入</button>
       </form>
       <div class="links">

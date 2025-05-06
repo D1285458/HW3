@@ -219,8 +219,37 @@ body {
   font-size: 1em; /* 調整字體大小 */
 }
 
+.input-container {
+  position: relative; /* 設置為相對定位，讓內部按鈕可以絕對定位 */
+  display: flex;
+  align-items: center;
+}
 
+.input-container input {
+  flex: 1; /* 讓輸入框自動擴展 */
+  padding-right: 40px; /* 預留空間給按鈕 */
+  border: 1px solid #ccc; /* 輸入框邊框 */
+  border-radius: 4px; /* 圓角 */
+  padding: 10px; /* 內部間距 */
+  box-sizing: border-box; /* 確保內部間距計入寬度 */
+}
 
+.input-container .toggle-visibility {
+  position: absolute;
+  right: 10px; /* 按鈕距離輸入框右側的距離 */
+  top: 50%; /* 垂直置中 */
+  transform: translateY(-50%); /* 修正垂直置中偏移 */
+  background: none; /* 移除背景 */
+  border: none; /* 移除邊框 */
+  padding: 0; /* 移除內邊距 */
+  cursor: pointer; /* 鼠標變為指針 */
+}
+
+.input-container .toggle-visibility img {
+  width: 33px; /* 設置圖片寬度 */
+  height: 33px; /* 設置圖片高度 */
+  display: block; /* 確保圖片顯示為區塊 */
+}
 /* Footer */
 .footer {
   text-align: center;
