@@ -62,4 +62,52 @@ document.addEventListener('DOMContentLoaded', function () {
       passwordVisibilityIcon.src = 'close.png'; // 閉眼睛圖標
     }
   });
+
+  // 選取忘記帳號密碼和加入會員的按鈕
+  const forgotPasswordLink = document.querySelector('.links a[href="#"]:first-child');
+  const joinMemberLink = document.querySelector('.links a[href="#"]:last-child');
+
+  // 為忘記帳號密碼按鈕添加事件
+  forgotPasswordLink.addEventListener('click', function (event) {
+    event.preventDefault(); // 阻止默認行為
+    alert('這裡應該導向查詢帳號密碼的頁面，但因為只有復刻登入頁面沒有復刻這邊的頁面所以彈窗替代。');
+  });
+
+  // 為加入會員按鈕添加事件
+  joinMemberLink.addEventListener('click', function (event) {
+    event.preventDefault(); // 阻止默認行為
+    alert('這裡應該導向加入會員的頁面，但因為只有復刻登入頁面沒有復刻這邊的頁面所以彈窗替代。');
+  });
+
+ // 選取登入按鈕
+ const loginButton = document.querySelector('button[type="submit"]');
+
+ // 為登入按鈕添加事件
+ loginButton.addEventListener('click', function (event) {
+   event.preventDefault(); // 阻止表單的默認提交行為
+
+   // 選取帳號和密碼輸入框
+   const accountInput = document.getElementById('account-input');
+   const passwordInput = document.getElementById('password-input');
+
+   // 驗證帳號和密碼是否輸入
+   if (!accountInput.value.trim() && !passwordInput.value.trim()) {
+    alert('請輸入帳號和密碼！');
+    return; // 終止後續執行
+  }
+
+   // 驗證帳號和密碼是否輸入
+   if (!accountInput.value.trim()) {
+     alert('請先輸入帳號！');
+     return; // 終止後續執行
+   }
+
+   if (!passwordInput.value.trim()) {
+     alert('請先輸入密碼！');
+     return; // 終止後續執行
+   }
+
+   // 如果帳號和密碼都已輸入，顯示登入成功提示
+   alert('您已按下登入按鈕，原本會進行安全性驗證和提交，但因為只有復刻登入頁面沒有復刻這邊的頁面所以彈窗替代。');
+ });
 });
