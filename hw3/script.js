@@ -126,6 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 如果有輸入關鍵字，顯示替代彈窗
-    alert('為了避免引用目標網站所以彈窗替代。');
+    alert('原本會導向博客來官網搜索圖書頁面，為了避免引用目標網站所以彈窗替代。');
   });
 });
