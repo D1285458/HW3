@@ -110,4 +110,22 @@ document.addEventListener('DOMContentLoaded', function () {
    // 如果帳號和密碼都已輸入，顯示登入成功提示
    alert('您已按下登入按鈕，原本會進行安全性驗證和提交，但因為只有復刻登入頁面沒有復刻這邊的頁面所以彈窗替代。');
  });
+
+  / 選取搜尋按鈕和關鍵字輸入框
+  const searchButton = document.querySelector('.search-bar button');
+  const keywordInput = document.querySelector('.search-bar input');
+
+  // 為搜尋按鈕添加事件
+  searchButton.addEventListener('click', function (event) {
+    event.preventDefault(); // 阻止按鈕的默認行為
+
+    // 檢查關鍵字輸入框是否為空
+    if (!keywordInput.value.trim()) {
+      alert('請輸入關鍵字！');
+      return; // 終止後續執行
+    }
+
+    // 如果有輸入關鍵字，顯示替代彈窗
+    alert('為了避免引用目標網站所以彈窗替代。');
+  });
 });
