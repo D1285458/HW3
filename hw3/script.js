@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
    alert('您已按下登入按鈕，原本會進行安全性驗證和提交，但因為只有復刻登入頁面沒有復刻這邊的頁面所以彈窗替代。');
  });
 
-  / 選取搜尋按鈕和關鍵字輸入框
+  // 選取搜尋按鈕和關鍵字輸入框
   const searchButton = document.querySelector('.search-bar button');
   const keywordInput = document.querySelector('.search-bar input');
 
